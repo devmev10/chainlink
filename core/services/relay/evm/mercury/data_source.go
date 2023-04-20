@@ -8,9 +8,9 @@ import (
 	"sync"
 
 	pkgerrors "github.com/pkg/errors"
-	ocrtypes "github.com/smartcontractkit/libocr/offchainreporting2/types"
-
 	relaymercury "github.com/smartcontractkit/chainlink-relay/pkg/reportingplugins/mercury"
+	ocrtypes "github.com/smartcontractkit/libocr/offchainreporting2plus/types"
+
 	evmclient "github.com/smartcontractkit/chainlink/v2/core/chains/evm/client"
 	httypes "github.com/smartcontractkit/chainlink/v2/core/chains/evm/headtracker/types"
 	evmtypes "github.com/smartcontractkit/chainlink/v2/core/chains/evm/types"
@@ -38,15 +38,23 @@ type datasource struct {
 
 	chEnhancedTelem  chan<- ocrcommon.EnhancedTelemetryMercuryData
 	chainHeadTracker ChainHeadTracker
+	fetcher          relaymercury.Fetcher
 }
 
 var _ relaymercury.DataSource = &datasource{}
 
-func NewDataSource(pr pipeline.Runner, jb job.Job, spec pipeline.Spec, lggr logger.Logger, rr chan pipeline.Run, enhancedTelemChan chan ocrcommon.EnhancedTelemetryMercuryData, chainHeadTracker ChainHeadTracker) *datasource {
-	return &datasource{pr, jb, spec, lggr, rr, sync.RWMutex{}, enhancedTelemChan, chainHeadTracker}
+func NewDataSource(pr pipeline.Runner, jb job.Job, spec pipeline.Spec, lggr logger.Logger, rr chan pipeline.Run, enhancedTelemChan chan ocrcommon.EnhancedTelemetryMercuryData, chainHeadTracker ChainHeadTracker, fetcher relaymercury.Fetcher) *datasource {
+	return &datasource{pr, jb, spec, lggr, rr, sync.RWMutex{}, enhancedTelemChan, chainHeadTracker, fetcher}
 }
 
-func (ds *datasource) Observe(ctx context.Context, repts ocrtypes.ReportTimestamp) (relaymercury.Observation, error) {
+func (ds *datasource) Observe(ctx context.Context, repts ocrtypes.ReportTimestamp, fetchMaxFinalizedBlockNum bool) (obs relaymercury.Observation, err error) {
+	// TODO: concurrency
+	if fetchMaxFinalizedBlockNum {
+		obs.MaxFinalizedBlockNumber.Val, obs.MaxFinalizedBlockNumber.Err = ds.fetcher.FetchInitialMaxFinalizedBlockNumber(ctx)
+	} else {
+		obs.MaxFinalizedBlockNumber.Val = -1
+	}
+	// TODO: concurrency
 	run, trrs, err := ds.executeRun(ctx)
 	if err != nil {
 		return relaymercury.Observation{}, fmt.Errorf("Observe failed while executing run: %w", err)
@@ -70,6 +78,7 @@ func (ds *datasource) Observe(ctx context.Context, repts ocrtypes.ReportTimestam
 	if err != nil {
 		return relaymercury.Observation{}, fmt.Errorf("Observe failed while parsing run results: %w", err)
 	}
+	// TODO: Concurrency?
 	ds.setCurrentBlock(ctx, &parsed)
 
 	if ocrcommon.ShouldCollectEnhancedTelemetryMercury(&ds.jb) {
