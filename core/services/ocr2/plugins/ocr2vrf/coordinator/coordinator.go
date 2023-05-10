@@ -1113,7 +1113,7 @@ func (c *coordinator) emitReportWillBeTransmittedMetrics(
 
 func FiltersFromSpec(spec *job.OCR2OracleSpec) (filters []logpoller.Filter, err error) {
 	var cfg ocr2vrfconfig.PluginConfig
-	var beacon ethkey.EIP55Address
+	var beacon, dkg ethkey.EIP55Address
 
 	if err = json.Unmarshal(spec.PluginConfig.Bytes(), &cfg); err != nil {
 		err = pkgerrors.Wrap(err, "failed to unmarshal ocr2vrf plugin config")
@@ -1125,7 +1125,7 @@ func FiltersFromSpec(spec *job.OCR2OracleSpec) (filters []logpoller.Filter, err 
 	if err2 != nil {
 		err = errors.Join(err, err2)
 	}
-	dkg, err2 := ethkey.NewEIP55Address(cfg.DKGContractAddress)
+	dkg, err2 = ethkey.NewEIP55Address(cfg.DKGContractAddress)
 	if err2 != nil {
 		err = errors.Join(err, err2)
 	}
