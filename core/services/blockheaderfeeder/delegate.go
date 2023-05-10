@@ -110,12 +110,7 @@ func (d *Delegate) ServicesForSpec(jb job.Job) ([]job.ServiceCtx, error) {
 
 			return nil, errors.Wrap(err, "building V1 coordinator")
 		}
-		var coord *blockhashstore.V1Coordinator
-		coord, err = blockhashstore.NewV1Coordinator(c, lp)
-		if err != nil {
-			return nil, errors.Wrap(err, "building V1 coordinator")
-		}
-		coordinators = append(coordinators, coord)
+		coordinators = append(coordinators, blockhashstore.NewV1Coordinator(c, lp))
 	}
 	if jb.BlockHeaderFeederSpec.CoordinatorV2Address != nil {
 		var c *v2.VRFCoordinatorV2
@@ -124,12 +119,8 @@ func (d *Delegate) ServicesForSpec(jb job.Job) ([]job.ServiceCtx, error) {
 
 			return nil, errors.Wrap(err, "building V2 coordinator")
 		}
-		var coord *blockhashstore.V2Coordinator
-		coord, err = blockhashstore.NewV2Coordinator(c, lp)
-		if err != nil {
-			return nil, errors.Wrap(err, "building V2 coordinator")
-		}
-		coordinators = append(coordinators, coord)
+
+		coordinators = append(coordinators, blockhashstore.NewV2Coordinator(c, lp))
 	}
 
 	bpBHS, err := blockhashstore.NewBulletproofBHS(chain.Config(), fromAddresses, chain.TxManager(), bhs, chain.ID(), d.ks)
