@@ -1129,7 +1129,7 @@ func FiltersFromSpec(spec *job.OCR2OracleSpec) (filters []logpoller.Filter, err 
 	if err2 != nil {
 		err = errors.Join(err, err2)
 	}
-	return []logpoller.Filter{createLogFilter(beacon.Address(), coord.Address(), dkg.Address())}, nil
+	return []logpoller.Filter{createLogFilter(beacon.Address(), coord.Address(), dkg.Address())}, err
 }
 
 func createLogFilter(beaconAddress common.Address, coordinatorAddress common.Address, dkgAddress common.Address) logpoller.Filter {
