@@ -169,7 +169,7 @@ func SetupAutomationBasic(t *testing.T, nodeUpgrade bool) {
 
 	if nodeUpgrade {
 		actions.UpgradeChainlinkNodeVersions(testEnv, upgradeImage, upgradeVersion,
-			chainlinkNodes[0], chainlinkNodes[1], chainlinkNodes[2], chainlinkNodes[3], chainlinkNodes[4])
+			chainlinkNodes[1], chainlinkNodes[2], chainlinkNodes[3], chainlinkNodes[4]) //TODO: Add back bootstrap node once nodes connect using Service Name and not IP
 		time.Sleep(time.Second * 30)
 		gom.Eventually(func(g gomega.Gomega) {
 			// Check if the upkeeps are performing multiple times by analyzing their counters and checking they are greater than 10
