@@ -65,12 +65,12 @@ require (
 	github.com/shirou/gopsutil/v3 v3.22.12
 	github.com/shopspring/decimal v1.3.1
 	github.com/smartcontractkit/chainlink-cosmos v0.1.7-0.20230501143435-e21d4d0d7c8a
-	github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230511154236-76abdbeb5406
+	github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230518165949-1edf294af2f3
 	github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230501143522-22fc1daaef73
 	github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783
 	// WARNING: Experimental version of libocr - do not merge until this is officially released!
 	github.com/smartcontractkit/libocr v0.0.0-20230510184648-c86c76435c5e
-	github.com/smartcontractkit/ocr2keepers v0.6.15-0.20230501143604-90dddd91b5bc
+	github.com/smartcontractkit/ocr2keepers v0.6.16-0.20230518162436-35687ff474d3
 	github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d
 	github.com/smartcontractkit/sqlx v1.3.5-0.20210805004948-4be295aacbeb
 	github.com/smartcontractkit/wsrpc v0.7.2
@@ -370,11 +370,11 @@ replace (
 	// replicating the replace directive on cosmos SDK
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 
-	// TEMP replacements
-	// github.com/smartcontractkit/chainlink-cosmos => /Users/sam/code/smartcontractkit/chainlink-cosmos
-	github.com/smartcontractkit/chainlink-relay => /Users/sam/code/smartcontractkit/chainlink-relay
-	// github.com/smartcontractkit/chainlink-solana => /Users/sam/code/smartcontractkit/chainlink-solana
-	// github.com/smartcontractkit/chainlink-starknet/relayer => /Users/sam/code/smartcontractkit/chainlink-starknet/relayer
-	github.com/smartcontractkit/ocr2keepers => /Users/sam/code/smartcontractkit/ocr2keepers
+// TEMP replacements
+// github.com/smartcontractkit/chainlink-cosmos => /Users/sam/code/smartcontractkit/chainlink-cosmos
+// github.com/smartcontractkit/chainlink-relay => /Users/sam/code/smartcontractkit/chainlink-relay
+// github.com/smartcontractkit/chainlink-solana => /Users/sam/code/smartcontractkit/chainlink-solana
+// github.com/smartcontractkit/chainlink-starknet/relayer => /Users/sam/code/smartcontractkit/chainlink-starknet/relayer
+// github.com/smartcontractkit/ocr2keepers => /Users/sam/code/smartcontractkit/ocr2keepers
 // github.com/smartcontractkit/ocr2vrf => /Users/sam/code/smartcontractkit/ocr2vrf
 )

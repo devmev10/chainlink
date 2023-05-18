@@ -1386,12 +1386,16 @@ github.com/sirupsen/logrus v1.9.0 h1:trlNQbNUG3OdDrDil03MCb1H2o9nJ1x4/5LYw7byDE0
 github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/smartcontractkit/chainlink-cosmos v0.1.7-0.20230501143435-e21d4d0d7c8a h1:c32ykM9q1+A6tPiDegN0bRCeYcMa/haOzuBtdwxCp4Y=
 github.com/smartcontractkit/chainlink-cosmos v0.1.7-0.20230501143435-e21d4d0d7c8a/go.mod h1:9D1rABsu/8415Mf2UqCrdfSXuf+VREQhaYTPbYC+eMk=
+github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230518165949-1edf294af2f3 h1:cVe2samWdI6NPzJRfrQhEPZ26nEOqltuCxM/TqN2sfU=
+github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230518165949-1edf294af2f3/go.mod h1:c9nR9f99H6rkfDtXyWwignoTREQBJ7p1uNpO2mEOZ4I=
 github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230501143522-22fc1daaef73 h1:N4EVt7+pPo0GJgw2PBWQ4dtSAsUhrs+Vn796M8RRTgI=
 github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230501143522-22fc1daaef73/go.mod h1:3AfSgbihCE55DmFg6PIntCIRWZvK1PjFUtD6U3O6aPE=
 github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783 h1:OK8PPBcQ0xxlmW6BwBUUKKBrpSVHTcs9dWflVJdHri4=
 github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783/go.mod h1:ks83EY2frE17c17UVRinfbTXlIAP6IpLDCdfKRThE/w=
 github.com/smartcontractkit/libocr v0.0.0-20230510184648-c86c76435c5e h1:/q41YGl/yMfm/M9zh449qmON9UqjuIQw7uIx5okq9q0=
 github.com/smartcontractkit/libocr v0.0.0-20230510184648-c86c76435c5e/go.mod h1:7Pd28puvezPJXB+xRJlcsx5CfzzkFJbMXydaAEsL4E8=
+github.com/smartcontractkit/ocr2keepers v0.6.16-0.20230518162436-35687ff474d3 h1:r65HXp2eHPozfFHHv4sDhDuDlWWzdpMVxwpdl0tHMnQ=
+github.com/smartcontractkit/ocr2keepers v0.6.16-0.20230518162436-35687ff474d3/go.mod h1:wgPK9PDqfm4I+8bXZuDmgx4BnKTsZcrCQ2al+seMb2g=
 github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d h1:TFK8odPcxuiwwRyDA9A57LUfuXfa9orE81fcjhyDkiw=
 github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d/go.mod h1:8XXFm+2hiYTjFBQKro1dmG2KUaA1XA+295csQ8REJIE=
 github.com/smartcontractkit/sqlx v1.3.5-0.20210805004948-4be295aacbeb h1:OMaBUb4X9IFPLbGbCHsMU+kw/BPCrewaVwWGIBc0I4A=
