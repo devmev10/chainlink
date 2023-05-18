@@ -68,7 +68,7 @@ func NewServices(
 	if err != nil {
 		return nil, errors.Wrap(err, "get chainset")
 	}
-	argsNoPlugin.ReportingPluginFactory = promwrapper.NewPromFactory(wrappedPluginFactory, "Mercury", string(jb.OCR2OracleSpec.Relay), big.NewInt(chain))
+	argsNoPlugin.MercuryPluginFactory = promwrapper.NewPromFactory(wrappedPluginFactory, "Mercury", string(jb.OCR2OracleSpec.Relay), big.NewInt(chain))
 	oracle, err := libocr2.NewOracle(argsNoPlugin)
 	if err != nil {
 		return nil, errors.WithStack(err)

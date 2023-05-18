@@ -11,7 +11,6 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/jpillora/backoff"
-	"github.com/pkg/errors"
 	pkgerrors "github.com/pkg/errors"
 	"golang.org/x/exp/maps"
 
