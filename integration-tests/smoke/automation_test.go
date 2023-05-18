@@ -801,9 +801,9 @@ func setupAutomationTest(
 		})
 	}
 	chainlinkProps := map[string]any{
-		"replicas": "1",
-		"toml":     client.AddNetworksConfig(automationBaseTOML, network),
-		//"secretsToml": client.AddSecretTomlConfig("https://google.com", "username1", "password1"),
+		"replicas":    "1",
+		"toml":        client.AddNetworksConfig(automationBaseTOML, network),
+		"secretsToml": client.AddSecretTomlConfig("https://google.com", "username1", "password1"),
 		"db": map[string]any{
 			"stateful": statefulDb,
 		},
