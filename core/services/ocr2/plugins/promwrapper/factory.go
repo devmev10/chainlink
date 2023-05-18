@@ -3,29 +3,29 @@ package promwrapper
 import (
 	"math/big"
 
-	ocr3types "github.com/smartcontractkit/libocr/offchainreporting2plus/ocr3types"
+	"github.com/smartcontractkit/libocr/offchainreporting2plus/types"
 )
 
-var _ ocr3types.MercuryPluginFactory = &promFactory{}
+var _ types.ReportingPluginFactory = &promFactory{}
 
 type promFactory struct {
-	wrapped   ocr3types.MercuryPluginFactory
+	wrapped   types.ReportingPluginFactory
 	name      string
 	chainType string
 	chainID   *big.Int
 }
 
-func (p *promFactory) NewMercuryPlugin(config ocr3types.MercuryPluginConfig) (ocr3types.MercuryPlugin, ocr3types.MercuryPluginInfo, error) {
-	plugin, info, err := p.wrapped.NewMercuryPlugin(config)
+func (p *promFactory) NewReportingPlugin(config types.ReportingPluginConfig) (types.ReportingPlugin, types.ReportingPluginInfo, error) {
+	plugin, info, err := p.wrapped.NewReportingPlugin(config)
 	if err != nil {
-		return nil, ocr3types.MercuryPluginInfo{}, err
+		return nil, types.ReportingPluginInfo{}, err
 	}
 
 	prom := New(plugin, p.name, p.chainType, p.chainID, config, nil)
 	return prom, info, nil
 }
 
-func NewPromFactory(wrapped ocr3types.MercuryPluginFactory, name, chainType string, chainID *big.Int) ocr3types.MercuryPluginFactory {
+func NewPromFactory(wrapped types.ReportingPluginFactory, name, chainType string, chainID *big.Int) types.ReportingPluginFactory {
 	return &promFactory{
 		wrapped:   wrapped,
 		name:      name,
