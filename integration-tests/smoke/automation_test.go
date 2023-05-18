@@ -113,11 +113,29 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestAutomatedBasic(t *testing.T) {
+func TestAutomationBasic(t *testing.T) {
+	SetupAutomationBasic(t, false)
+
+}
+
+func SetupAutomationBasic(t *testing.T, nodeUpgrade bool) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
-		t, "basic-upkeep", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+	var (
+		upgradeImage   string
+		upgradeVersion string
+		err            error
+		testName       = "basic-upkeep"
+	)
+	if nodeUpgrade {
+		upgradeImage, err = utils.GetEnv("UPGRADE_IMAGE")
+		require.NoError(t, err, "Error getting upgrade image")
+		upgradeVersion, err = utils.GetEnv("UPGRADE_VERSION")
+		require.NoError(t, err, "Error getting upgrade version")
+		testName = "node-upgrade"
+	}
+	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner, testEnv := setupAutomationTest(
+		t, testName, ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, nodeUpgrade,
 	)
 	if onlyStartRunner {
 		return
@@ -149,13 +167,31 @@ func TestAutomatedBasic(t *testing.T) {
 		}
 	}, "5m", "1s").Should(gomega.Succeed()) // ~1m for cluster setup, ~2m for performing each upkeep 5 times, ~2m buffer
 
+	if nodeUpgrade {
+		actions.UpgradeChainlinkNodeVersions(testEnv, upgradeImage, upgradeVersion,
+			chainlinkNodes[0], chainlinkNodes[1], chainlinkNodes[2], chainlinkNodes[3], chainlinkNodes[4])
+		time.Sleep(time.Second * 30)
+		gom.Eventually(func(g gomega.Gomega) {
+			// Check if the upkeeps are performing multiple times by analyzing their counters and checking they are greater than 10
+			for i := 0; i < len(upkeepIDs); i++ {
+				counter, err := consumers[i].Counter(context.Background())
+				require.NoError(t, err, "Failed to retrieve consumer counter for upkeep at index %d", i)
+				expect := 10
+				l.Info().Int64("Upkeeps Performed", counter.Int64()).Int("Upkeep ID", i).Msg("Number of upkeeps performed")
+				g.Expect(counter.Int64()).Should(gomega.BeNumerically(">=", int64(expect)),
+					"Expected consumer counter to be greater than %d, but got %d", expect, counter.Int64())
+			}
+		}, "5m", "1s").Should(gomega.Succeed())
+
+	}
+
 	// Cancel all the registered upkeeps via the registry
 	for i := 0; i < len(upkeepIDs); i++ {
 		err := registry.CancelUpkeep(upkeepIDs[i])
 		require.NoError(t, err, "Could not cancel upkeep at index %d", i)
 	}
 
-	err := chainClient.WaitForEvents()
+	err = chainClient.WaitForEvents()
 	require.NoError(t, err, "Error encountered when waiting for upkeeps to be cancelled")
 
 	var countersAfterCancellation = make([]*big.Int, len(upkeepIDs))
@@ -180,10 +216,10 @@ func TestAutomatedBasic(t *testing.T) {
 	}, "1m", "1s").Should(gomega.Succeed())
 }
 
-func TestAutomatedAddFunds(t *testing.T) {
+func TestAutomationAddFunds(t *testing.T) {
 	t.Parallel()
 
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "add-funds", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -232,10 +268,10 @@ func TestAutomatedAddFunds(t *testing.T) {
 	}, "2m", "1s").Should(gomega.Succeed()) // ~1m for perform, 1m buffer
 }
 
-func TestAutomatedPauseUnPause(t *testing.T) {
+func TestAutomationPauseUnPause(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "pause-unpause", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -316,10 +352,10 @@ func TestAutomatedPauseUnPause(t *testing.T) {
 	}, "2m", "1s").Should(gomega.Succeed()) // ~1m to perform, 1m buffer
 }
 
-func TestAutomatedRegisterUpkeep(t *testing.T) {
+func TestAutomationRegisterUpkeep(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "register-upkeep", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -389,10 +425,10 @@ func TestAutomatedRegisterUpkeep(t *testing.T) {
 	}, "2m", "1s").Should(gomega.Succeed()) // ~1m for upkeeps to perform, 1m buffer
 }
 
-func TestAutomatedPauseRegistry(t *testing.T) {
+func TestAutomationPauseRegistry(t *testing.T) {
 	t.Parallel()
 
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "pause-registry", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -448,10 +484,10 @@ func TestAutomatedPauseRegistry(t *testing.T) {
 	}, "1m", "1s").Should(gomega.Succeed())
 }
 
-func TestAutomatedKeeperNodesDown(t *testing.T) {
+func TestAutomationKeeperNodesDown(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
-	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "keeper-nodes-down", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -535,10 +571,10 @@ func TestAutomatedKeeperNodesDown(t *testing.T) {
 	}, "2m", "1s").Should(gomega.Succeed())
 }
 
-func TestAutomatedPerformSimulation(t *testing.T) {
+func TestAutomationPerformSimulation(t *testing.T) {
 	t.Parallel()
 
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "perform-simulation", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -590,10 +626,10 @@ func TestAutomatedPerformSimulation(t *testing.T) {
 	}, "2m", "1s").Should(gomega.Succeed()) // ~1m to perform once, 1m buffer
 }
 
-func TestAutomatedCheckPerformGasLimit(t *testing.T) {
+func TestAutomationCheckPerformGasLimit(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
-	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "gas-limit", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -695,7 +731,7 @@ func TestAutomatedCheckPerformGasLimit(t *testing.T) {
 func TestUpdateCheckData(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
-	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner := setupAutomationTest(
+	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
 		t, "update-check-data", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
 	)
 	if onlyStartRunner {
@@ -761,6 +797,7 @@ func setupAutomationTest(
 	testName string,
 	registryVersion ethereum.KeeperRegistryVersion,
 	registryConfig contracts.KeeperRegistrySettings,
+	statefulDb ...bool,
 ) (
 	chainClient blockchain.EVMClient,
 	chainlinkNodes []*client.Chainlink,
@@ -769,6 +806,7 @@ func setupAutomationTest(
 	registry contracts.KeeperRegistry,
 	registrar contracts.KeeperRegistrar,
 	onlyStartRunner bool,
+	testEnvironment *environment.Environment,
 ) {
 	network := networks.SelectedNetwork
 	evmConfig := eth.New(nil)
@@ -779,20 +817,25 @@ func setupAutomationTest(
 			WsURLs:      network.URLs,
 		})
 	}
-	chainlinkChart := chainlink.New(0, map[string]any{
-		"replicas":    "5",
-		"toml":        client.AddNetworksConfig(automationBaseTOML, network),
-		"secretsToml": client.AddSecretTomlConfig("https://google.com", "username1", "password1"),
-	})
+	chainlinkProps := map[string]any{
+		"replicas": "1",
+		"toml":     client.AddNetworksConfig(automationBaseTOML, network),
+		//"secretsToml": client.AddSecretTomlConfig("https://google.com", "username1", "password1"),
+		"db": map[string]any{
+			"stateful": statefulDb,
+		},
+	}
 
-	testEnvironment := environment.New(&environment.Config{
+	testEnvironment = environment.New(&environment.Config{
 		NamespacePrefix: fmt.Sprintf("smoke-automation-%s-%s", testName, strings.ReplaceAll(strings.ToLower(network.Name), " ", "-")),
 		Test:            t,
 	}).
 		AddHelm(mockservercfg.New(nil)).
 		AddHelm(mockserver.New(nil)).
-		AddHelm(evmConfig).
-		AddHelm(chainlinkChart)
+		AddHelm(evmConfig)
+	for i := 0; i < 5; i++ {
+		testEnvironment.AddHelm(chainlink.New(i, chainlinkProps))
+	}
 	err := testEnvironment.Run()
 
 	require.NoError(t, err, "Error setting up test environment")
@@ -839,5 +882,5 @@ func setupAutomationTest(
 		})
 	}
 
-	return chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner
+	return chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner, testEnvironment
 }
