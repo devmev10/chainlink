@@ -55,25 +55,8 @@ PerformGasOverhead = 150_000
 [P2P]
 [P2P.V2]
 Enabled = true
-AnnounceAddresses = ["0.0.0.0:6690"]
-ListenAddresses = ["0.0.0.0:6690"]`
-
-	automationEnvVars = map[string]any{
-		"FEATURE_LOG_POLLER":                   "true",
-		"FEATURE_OFFCHAIN_REPORTING2":          "true",
-		"FEATURE_OFFCHAIN_REPORTING":           "false",
-		"KEEPER_TURN_LOOK_BACK":                "0",
-		"KEEPER_REGISTRY_SYNC_INTERVAL":        "5m",
-		"KEEPER_REGISTRY_PERFORM_GAS_OVERHEAD": "150000",
-
-		"P2PV2_ANNOUNCE_ADDRESSES": "0.0.0.0:6690",
-		"P2PV2_LISTEN_ADDRESSES":   "0.0.0.0:6690",
-		"P2P_ANNOUNCE_IP":          "",
-		"P2P_ANNOUNCE_PORT":        "",
-		"P2P_BOOTSTRAP_PEERS":      "",
-		"P2P_LISTEN_IP":            "",
-		"P2P_LISTEN_PORT":          "",
-	}
+AnnounceAddresses = ["0.0.0.0:8090"]
+ListenAddresses = ["0.0.0.0:8090"]`
 
 	defaultOCRRegistryConfig = contracts.KeeperRegistrySettings{
 		PaymentPremiumPPB:    uint32(200000000),
@@ -169,8 +152,8 @@ func SetupAutomationBasic(t *testing.T, nodeUpgrade bool) {
 
 	if nodeUpgrade {
 		actions.UpgradeChainlinkNodeVersions(testEnv, upgradeImage, upgradeVersion,
-			chainlinkNodes[1], chainlinkNodes[2], chainlinkNodes[3], chainlinkNodes[4]) //TODO: Add back bootstrap node once nodes connect using Service Name and not IP
-		time.Sleep(time.Second * 30)
+			chainlinkNodes[0], chainlinkNodes[1], chainlinkNodes[2], chainlinkNodes[3], chainlinkNodes[4])
+		time.Sleep(time.Second * 10)
 		gom.Eventually(func(g gomega.Gomega) {
 			// Check if the upkeeps are performing multiple times by analyzing their counters and checking they are greater than 10
 			for i := 0; i < len(upkeepIDs); i++ {

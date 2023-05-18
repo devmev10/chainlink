@@ -6,5 +6,4 @@ import (
 
 func TestAutomationNodeUpgrade(t *testing.T) {
 	SetupAutomationBasic(t, true)
-
 }
