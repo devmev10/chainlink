@@ -1384,37 +1384,16 @@ github.com/sirupsen/logrus v1.7.0/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic
 github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=
 github.com/sirupsen/logrus v1.9.0 h1:trlNQbNUG3OdDrDil03MCb1H2o9nJ1x4/5LYw7byDE0=
 github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
-<<<<<<< HEAD
-github.com/smartcontractkit/chainlink-cosmos v0.4.0 h1:xYLAcJJIm0cyMtYtMaosO45bykEwcwQOmZz3mz46Y2A=
-github.com/smartcontractkit/chainlink-cosmos v0.4.0/go.mod h1:938jBqOrhdCq4A8enUiBliiDLBndAXebHIitKsDVqY0=
-github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230517200758-40dada2543a1 h1:/gqM+lMSfoxdNSeruMgEdqA7a/RJuz6l36LPuKoI1EU=
-github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230517200758-40dada2543a1/go.mod h1:f7/HKcJWWFzINrkDDlpKsFaU6D+8D4B4OrQxkkCX4oc=
-github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230516001004-0216997a2508 h1:hsCcqkK7ZgABURMRYbNgRdVbNJv7JJPGlgKJbukjMsk=
-github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230516001004-0216997a2508/go.mod h1:CUmP50gxZsjwEYA7balCV3mhvX0CrR/a01X6jGBZR8I=
-github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230424184429-bfdf6bddb239 h1:YmYkbdM5YXVV+IWgp+5ctfplMEoXamT0LR0qsnM4eps=
-github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230424184429-bfdf6bddb239/go.mod h1:RZzvRfGjMe4lBOT1H/MRfjnNoyUWOiHlOcHx/BZYg+M=
-github.com/smartcontractkit/libocr v0.0.0-20230413082317-9561d14087cc h1:aSCDAai0Dmbhp/KHTtJnC/EJcaEz4CAO80SKRzRZiQA=
-github.com/smartcontractkit/libocr v0.0.0-20230413082317-9561d14087cc/go.mod h1:5JnCHuYgmIP9ZyXzgAfI5Iwu0WxBtBKp+ApeT5o1Cjw=
-github.com/smartcontractkit/ocr2keepers v0.6.15 h1:dFhg+qT+tc6b3G8N4qnAHuHe8N0m8CSA8g4YGSeTGPo=
-github.com/smartcontractkit/ocr2keepers v0.6.15/go.mod h1:gqIksJFzdXFsHfGdCWm1uTxbwvAltgcwcaqIgAStC1A=
-github.com/smartcontractkit/ocr2vrf v0.0.0-20230510102715-c58be582bf19 h1:RxaC+V34UEP2u/riXfcvWPZEglri4UsfQi5joUObZ08=
-github.com/smartcontractkit/ocr2vrf v0.0.0-20230510102715-c58be582bf19/go.mod h1:AZbOisIoA3cOUku8suZ+KWBnzbRiafmhi7UKiXoezrk=
-=======
 github.com/smartcontractkit/chainlink-cosmos v0.1.7-0.20230501143435-e21d4d0d7c8a h1:c32ykM9q1+A6tPiDegN0bRCeYcMa/haOzuBtdwxCp4Y=
 github.com/smartcontractkit/chainlink-cosmos v0.1.7-0.20230501143435-e21d4d0d7c8a/go.mod h1:9D1rABsu/8415Mf2UqCrdfSXuf+VREQhaYTPbYC+eMk=
-github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230511154236-76abdbeb5406 h1:6UGrDLLznVHa8KYaCZqGo6rI8Ih9KigZwqnYzY6j718=
-github.com/smartcontractkit/chainlink-relay v0.1.7-0.20230511154236-76abdbeb5406/go.mod h1:9s33DvMfjkqhCP26UlAcC3DjcO8JA8YeeHSWeILMgj8=
 github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230501143522-22fc1daaef73 h1:N4EVt7+pPo0GJgw2PBWQ4dtSAsUhrs+Vn796M8RRTgI=
 github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230501143522-22fc1daaef73/go.mod h1:3AfSgbihCE55DmFg6PIntCIRWZvK1PjFUtD6U3O6aPE=
 github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783 h1:OK8PPBcQ0xxlmW6BwBUUKKBrpSVHTcs9dWflVJdHri4=
 github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783/go.mod h1:ks83EY2frE17c17UVRinfbTXlIAP6IpLDCdfKRThE/w=
 github.com/smartcontractkit/libocr v0.0.0-20230510184648-c86c76435c5e h1:/q41YGl/yMfm/M9zh449qmON9UqjuIQw7uIx5okq9q0=
 github.com/smartcontractkit/libocr v0.0.0-20230510184648-c86c76435c5e/go.mod h1:7Pd28puvezPJXB+xRJlcsx5CfzzkFJbMXydaAEsL4E8=
-github.com/smartcontractkit/ocr2keepers v0.6.15-0.20230501143604-90dddd91b5bc h1:mYmaBdyJAk9J3tve7CZYn0ur9qw4Yw31ZQnY1BMhKWk=
-github.com/smartcontractkit/ocr2keepers v0.6.15-0.20230501143604-90dddd91b5bc/go.mod h1:wgPK9PDqfm4I+8bXZuDmgx4BnKTsZcrCQ2al+seMb2g=
 github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d h1:TFK8odPcxuiwwRyDA9A57LUfuXfa9orE81fcjhyDkiw=
 github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d/go.mod h1:8XXFm+2hiYTjFBQKro1dmG2KUaA1XA+295csQ8REJIE=
->>>>>>> 4f9effa053 (Implements new chainlink-relay + libocr versions)
 github.com/smartcontractkit/sqlx v1.3.5-0.20210805004948-4be295aacbeb h1:OMaBUb4X9IFPLbGbCHsMU+kw/BPCrewaVwWGIBc0I4A=
 github.com/smartcontractkit/sqlx v1.3.5-0.20210805004948-4be295aacbeb/go.mod h1:HNUu4cJekUdsJbwRBCiOybtkPJEfGRELQPe2tkoDEyk=
 github.com/smartcontractkit/wsrpc v0.7.2 h1:iBXzMeg7vc5YoezIQBq896y25BARw7OKbhrb6vPbtRQ=

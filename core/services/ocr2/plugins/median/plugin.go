@@ -7,11 +7,8 @@ import (
 	"os/exec"
 	"time"
 
-	"github.com/hashicorp/go-plugin"
-
 	"github.com/smartcontractkit/chainlink-relay/pkg/loop"
 	"github.com/smartcontractkit/chainlink-relay/pkg/types"
-	"github.com/smartcontractkit/libocr/offchainreporting2/reportingplugin/median"
 	libocr2 "github.com/smartcontractkit/libocr/offchainreporting2plus"
 	"github.com/smartcontractkit/libocr/offchainreporting2plus/reportingplugin/median"
 	ocrtypes "github.com/smartcontractkit/libocr/offchainreporting2plus/types"

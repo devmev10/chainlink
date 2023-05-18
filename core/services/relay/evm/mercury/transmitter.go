@@ -15,7 +15,6 @@ import (
 	pkgerrors "github.com/pkg/errors"
 	"golang.org/x/exp/maps"
 
-	"github.com/smartcontractkit/libocr/offchainreporting2/chains/evmutil"
 	"github.com/smartcontractkit/libocr/offchainreporting2plus/chains/evmutil"
 	ocrtypes "github.com/smartcontractkit/libocr/offchainreporting2plus/types"
 
