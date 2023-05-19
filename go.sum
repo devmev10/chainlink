@@ -1394,6 +1394,8 @@ github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29
 github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783/go.mod h1:ks83EY2frE17c17UVRinfbTXlIAP6IpLDCdfKRThE/w=
 github.com/smartcontractkit/libocr v0.0.0-20230518221931-52d566a4d834 h1:ZOQ4rZh5ETlvGSqsHxhDyAfPAvgWGC07ijJcuVP2oVI=
 github.com/smartcontractkit/libocr v0.0.0-20230518221931-52d566a4d834/go.mod h1:7Pd28puvezPJXB+xRJlcsx5CfzzkFJbMXydaAEsL4E8=
+github.com/smartcontractkit/libocr v0.0.0-20230519184419-d1e3ab8e3ff0 h1:4OKVFF5b3OptWh6V+mI4BzQKGwmQjYyd03FbKsbI0ik=
+github.com/smartcontractkit/libocr v0.0.0-20230519184419-d1e3ab8e3ff0/go.mod h1:7Pd28puvezPJXB+xRJlcsx5CfzzkFJbMXydaAEsL4E8=
 github.com/smartcontractkit/ocr2keepers v0.6.16-0.20230518162436-35687ff474d3 h1:r65HXp2eHPozfFHHv4sDhDuDlWWzdpMVxwpdl0tHMnQ=
 github.com/smartcontractkit/ocr2keepers v0.6.16-0.20230518162436-35687ff474d3/go.mod h1:wgPK9PDqfm4I+8bXZuDmgx4BnKTsZcrCQ2al+seMb2g=
 github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d h1:TFK8odPcxuiwwRyDA9A57LUfuXfa9orE81fcjhyDkiw=

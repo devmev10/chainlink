@@ -69,7 +69,7 @@ require (
 	github.com/smartcontractkit/chainlink-solana v1.0.3-0.20230501143522-22fc1daaef73
 	github.com/smartcontractkit/chainlink-starknet/relayer v0.0.0-20230501143535-c29c0b851783
 	// WARNING: Experimental version of libocr - do not merge until this is officially released!
-	github.com/smartcontractkit/libocr v0.0.0-20230518221931-52d566a4d834
+	github.com/smartcontractkit/libocr v0.0.0-20230519184419-d1e3ab8e3ff0
 	github.com/smartcontractkit/ocr2keepers v0.6.16-0.20230518162436-35687ff474d3
 	github.com/smartcontractkit/ocr2vrf v0.0.0-20230511132215-c7d370897a3d
 	github.com/smartcontractkit/sqlx v1.3.5-0.20210805004948-4be295aacbeb
