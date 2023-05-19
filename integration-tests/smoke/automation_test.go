@@ -203,7 +203,7 @@ func TestAutomationAddFunds(t *testing.T) {
 	t.Parallel()
 
 	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "add-funds", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "add-funds", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -255,7 +255,7 @@ func TestAutomationPauseUnPause(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
 	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "pause-unpause", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "pause-unpause", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -339,7 +339,7 @@ func TestAutomationRegisterUpkeep(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
 	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "register-upkeep", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "register-upkeep", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -412,7 +412,7 @@ func TestAutomationPauseRegistry(t *testing.T) {
 	t.Parallel()
 
 	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "pause-registry", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "pause-registry", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -471,7 +471,7 @@ func TestAutomationKeeperNodesDown(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
 	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "keeper-nodes-down", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "keeper-nodes-down", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -558,7 +558,7 @@ func TestAutomationPerformSimulation(t *testing.T) {
 	t.Parallel()
 
 	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "perform-simulation", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "perform-simulation", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -613,7 +613,7 @@ func TestAutomationCheckPerformGasLimit(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
 	chainClient, chainlinkNodes, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "gas-limit", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "gas-limit", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -715,7 +715,7 @@ func TestUpdateCheckData(t *testing.T) {
 	t.Parallel()
 	l := utils.GetTestLogger(t)
 	chainClient, _, contractDeployer, linkToken, registry, registrar, onlyStartRunner, _ := setupAutomationTest(
-		t, "update-check-data", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig,
+		t, "update-check-data", ethereum.RegistryVersion_2_0, defaultOCRRegistryConfig, false,
 	)
 	if onlyStartRunner {
 		return
@@ -780,7 +780,7 @@ func setupAutomationTest(
 	testName string,
 	registryVersion ethereum.KeeperRegistryVersion,
 	registryConfig contracts.KeeperRegistrySettings,
-	statefulDb ...bool,
+	statefulDb bool,
 ) (
 	chainClient blockchain.EVMClient,
 	chainlinkNodes []*client.Chainlink,
