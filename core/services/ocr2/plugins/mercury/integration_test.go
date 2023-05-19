@@ -229,7 +229,7 @@ func TestIntegration_Mercury(t *testing.T) {
 	onchainConfig, err := (relaymercury.StandardOnchainConfigCodec{}).Encode(c)
 	require.NoError(t, err)
 
-	signers, _, _, onchainConfig, offchainConfigVersion, offchainConfig, err := confighelper.ContractSetConfigArgsForTests(
+	signers, _, _, onchainConfig, offchainConfigVersion, offchainConfig, err := confighelper.ContractSetConfigArgsForTestsMercuryV02(
 		2*time.Second,        // DeltaProgress
 		20*time.Second,       // DeltaResend
 		100*time.Millisecond, // DeltaRound
@@ -239,11 +239,7 @@ func TestIntegration_Mercury(t *testing.T) {
 		[]int{len(nodes)},    // S
 		oracles,
 		[]byte{},             // reportingPluginConfig []byte,
-		0,                    // Max duration query
 		250*time.Millisecond, // Max duration observation
-		250*time.Millisecond, // MaxDurationReport
-		250*time.Millisecond, // MaxDurationShouldAcceptFinalizedReport
-		250*time.Millisecond, // MaxDurationShouldTransmitAcceptedReport
 		int(f),               // f
 		onchainConfig,
 	)
