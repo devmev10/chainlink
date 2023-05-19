@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Config validation now enforces protection against duplicate chain ids and node fields. As multiple configuration files can be specified, each duplicate is reported in the file path where it is detected. If you have specified duplicate chain ids or nodes, this change will error out of all `node` subcommands.
 - Set default for EVM.GasEstimator.BumpTxDepth to EVM.Transactions.MaxInFlight.
 - Bumped batch size defaults for EVM specific configuration. If you are overriding any of these fields in your local config, please consider if it is necesssary:
 	- `LogBackfillBatchSize = 1000`

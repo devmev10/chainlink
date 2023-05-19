@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"errors"
+	"go.uber.org/multierr"
 
 	"github.com/pelletier/go-toml/v2"
 
@@ -179,4 +180,25 @@ func (s *Secrets) setEnv() error {
 		s.Prometheus.AuthToken = &prometheusAuthToken
 	}
 	return nil
+}
+
+func (c *Config) DetectDuplicates(f *Config) (err error) {
+
+	if err1 := c.EVM.DetectDuplicates(f.EVM); err1 != nil {
+		err = multierr.Append(err, fmt.Errorf("found violating duplicate: %w", err1))
+	}
+
+	if err2 := c.Cosmos.DetectDuplicates(f.Cosmos); err2 != nil {
+		err = multierr.Append(err, fmt.Errorf("found violating duplicate: %w", err2))
+	}
+
+	if err3 := c.Solana.DetectDuplicates(f.Solana); err3 != nil {
+		err = multierr.Append(err, fmt.Errorf("found violating duplicate: %w", err3))
+	}
+
+	if err4 := c.Starknet.DetectDuplicates(f.Starknet); err4 != nil {
+		err = multierr.Append(err, fmt.Errorf("found violating duplicate: %w", err4))
+	}
+
+	return
 }

@@ -22,12 +22,17 @@ import (
 
 type CosmosConfigs []*CosmosConfig
 
+func (cs CosmosConfigs) DetectDuplicates(fs CosmosConfigs) (err error) {
+	combined := append(cs, fs...)
+	return combined.ValidateConfig()
+}
+
 func (cs CosmosConfigs) ValidateConfig() (err error) {
 	// Unique chain IDs
 	chainIDs := v2.UniqueStrings{}
 	for i, c := range cs {
 		if chainIDs.IsDupe(c.ChainID) {
-			err = multierr.Append(err, v2.NewErrDuplicate(fmt.Sprintf("%d.ChainID", i), *c.ChainID))
+			err = multierr.Append(err, v2.NewErrDuplicate(fmt.Sprintf("Cosmos.%d.ChainID", i), *c.ChainID))
 		}
 	}
 
@@ -36,7 +41,7 @@ func (cs CosmosConfigs) ValidateConfig() (err error) {
 	for i, c := range cs {
 		for j, n := range c.Nodes {
 			if names.IsDupe(n.Name) {
-				err = multierr.Append(err, v2.NewErrDuplicate(fmt.Sprintf("%d.Nodes.%d.Name", i, j), *n.Name))
+				err = multierr.Append(err, v2.NewErrDuplicate(fmt.Sprintf("Cosmos.%d.Nodes.%d.Name", i, j), *n.Name))
 			}
 		}
 	}
@@ -47,7 +52,7 @@ func (cs CosmosConfigs) ValidateConfig() (err error) {
 		for j, n := range c.Nodes {
 			u := (*url.URL)(n.TendermintURL)
 			if urls.IsDupeFmt(u) {
-				err = multierr.Append(err, v2.NewErrDuplicate(fmt.Sprintf("%d.Nodes.%d.TendermintURL", i, j), u.String()))
+				err = multierr.Append(err, v2.NewErrDuplicate(fmt.Sprintf("Cosmos.%d.Nodes.%d.TendermintURL", i, j), u.String()))
 			}
 		}
 	}

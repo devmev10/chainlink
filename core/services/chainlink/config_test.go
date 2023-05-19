@@ -119,8 +119,8 @@ var (
 				},
 				Nodes: []*evmcfg.Node{
 					{
-						Name:  ptr("primary"),
-						WSURL: mustURL("wss://web.socket/test"),
+						Name:  ptr("foo"),
+						WSURL: mustURL("wss://web.socket/test/foo"),
 					},
 				}},
 			{
@@ -132,8 +132,8 @@ var (
 				},
 				Nodes: []*evmcfg.Node{
 					{
-						Name:  ptr("primary"),
-						WSURL: mustURL("wss://web.socket/test"),
+						Name:  ptr("bar"),
+						WSURL: mustURL("wss://web.socket/test/bar"),
 					},
 				}},
 		},
@@ -152,7 +152,7 @@ var (
 					BlocksUntilTxTimeout: ptr[int64](20),
 				},
 				Nodes: []*coscfg.Node{
-					{Name: ptr("primary"), TendermintURL: relayutils.MustParseURL("http://bombay.cosmos.com")},
+					{Name: ptr("secondary"), TendermintURL: relayutils.MustParseURL("http://bombay.cosmos.com")},
 				}},
 		},
 		Solana: []*solana.SolanaConfig{
@@ -171,7 +171,7 @@ var (
 					OCR2CachePollPeriod: relayutils.MustNewDuration(time.Minute),
 				},
 				Nodes: []*solcfg.Node{
-					{Name: ptr("primary"), URL: relayutils.MustParseURL("http://testnet.solana.com")},
+					{Name: ptr("secondary"), URL: relayutils.MustParseURL("http://testnet.solana.com")},
 				},
 			},
 		},
@@ -534,12 +534,12 @@ func TestConfig_Marshal(t *testing.T) {
 				{
 					Name:    ptr("foo"),
 					HTTPURL: mustURL("https://foo.web"),
-					WSURL:   mustURL("wss://web.socket/test"),
+					WSURL:   mustURL("wss://web.socket/test/foo"),
 				},
 				{
 					Name:    ptr("bar"),
 					HTTPURL: mustURL("https://bar.com"),
-					WSURL:   mustURL("wss://web.socket/test"),
+					WSURL:   mustURL("wss://web.socket/test/bar"),
 				},
 				{
 					Name:     ptr("broadcast"),
@@ -918,12 +918,12 @@ GasLimit = 540
 
 [[EVM.Nodes]]
 Name = 'foo'
-WSURL = 'wss://web.socket/test'
+WSURL = 'wss://web.socket/test/foo'
 HTTPURL = 'https://foo.web'
 
 [[EVM.Nodes]]
 Name = 'bar'
-WSURL = 'wss://web.socket/test'
+WSURL = 'wss://web.socket/test/bar'
 HTTPURL = 'https://bar.com'
 
 [[EVM.Nodes]]
@@ -1050,9 +1050,9 @@ func TestConfig_Validate(t *testing.T) {
 		{name: "invalid", toml: invalidTOML, exp: `invalid configuration: 5 errors:
 	- Database.Lock.LeaseRefreshInterval: invalid value (6s): must be less than or equal to half of LeaseDuration (10s)
 	- EVM: 8 errors:
-		- 1.ChainID: invalid value (1): duplicate - must be unique
-		- 0.Nodes.1.Name: invalid value (foo): duplicate - must be unique
-		- 3.Nodes.4.WSURL: invalid value (ws://dupe.com): duplicate - must be unique
+		- EVM.1.ChainID: invalid value (1): duplicate - must be unique
+		- EVM.0.Nodes.1.Name: invalid value (foo): duplicate - must be unique
+		- EVM.3.Nodes.4.WSURL: invalid value (ws://dupe.com): duplicate - must be unique
 		- 0: 3 errors:
 			- GasEstimator.BumpTxDepth: invalid value (11): must be less than or equal to Transactions.MaxInFlight
 			- GasEstimator: 6 errors:
@@ -1101,8 +1101,8 @@ func TestConfig_Validate(t *testing.T) {
 			- ChainID: missing: required for all chains
 			- Nodes: missing: must have at least one node
 	- Cosmos: 5 errors:
-		- 1.ChainID: invalid value (Malaga-420): duplicate - must be unique
-		- 0.Nodes.1.Name: invalid value (test): duplicate - must be unique
+		- Cosmos.1.ChainID: invalid value (Malaga-420): duplicate - must be unique
+		- Cosmos.0.Nodes.1.Name: invalid value (test): duplicate - must be unique
 		- 0.Nodes: 2 errors:
 				- 0.TendermintURL: missing: required for all nodes
 				- 1.TendermintURL: missing: required for all nodes
@@ -1111,8 +1111,8 @@ func TestConfig_Validate(t *testing.T) {
 			- ChainID: missing: required for all chains
 			- Nodes: missing: must have at least one node
 	- Solana: 5 errors:
-		- 1.ChainID: invalid value (mainnet): duplicate - must be unique
-		- 1.Nodes.1.Name: invalid value (bar): duplicate - must be unique
+		- Solana.1.ChainID: invalid value (mainnet): duplicate - must be unique
+		- Solana.1.Nodes.1.Name: invalid value (bar): duplicate - must be unique
 		- 0.Nodes: missing: must have at least one node
 		- 1.Nodes: 2 errors:
 				- 0.URL: missing: required for all nodes
@@ -1121,7 +1121,7 @@ func TestConfig_Validate(t *testing.T) {
 			- ChainID: missing: required for all chains
 			- Nodes: missing: must have at least one node
 	- Starknet: 3 errors:
-		- 0.Nodes.1.Name: invalid value (primary): duplicate - must be unique
+		- Starknet.0.Nodes.1.Name: invalid value (primary): duplicate - must be unique
 		- 0.ChainID: missing: required for all chains
 		- 1: 2 errors:
 			- ChainID: missing: required for all chains

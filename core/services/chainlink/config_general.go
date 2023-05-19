@@ -78,6 +78,13 @@ func (o *GeneralConfigOpts) parseConfig(config string) error {
 	if err2 := v2.DecodeTOML(strings.NewReader(config), &c); err2 != nil {
 		return fmt.Errorf("failed to decode config TOML: %w", err2)
 	}
+
+	// Detects undesired duplicates
+	if err3 := o.Config.DetectDuplicates(&c); err3 != nil {
+		return fmt.Errorf("detected breaking duplicates: %w", err3)
+	}
+
+	// Overrides duplicate fields
 	o.Config.SetFrom(&c)
 	return nil
 }
