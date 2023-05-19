@@ -229,7 +229,6 @@ func TestIntegration_Mercury(t *testing.T) {
 	onchainConfig, err := (relaymercury.StandardOnchainConfigCodec{}).Encode(c)
 	require.NoError(t, err)
 
-	require.NoError(t, err)
 	signers, _, _, onchainConfig, offchainConfigVersion, offchainConfig, err := confighelper.ContractSetConfigArgsForTests(
 		2*time.Second,        // DeltaProgress
 		20*time.Second,       // DeltaResend
