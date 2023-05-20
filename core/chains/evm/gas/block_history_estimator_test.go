@@ -1290,6 +1290,17 @@ func TestBlockHistoryEstimator_EffectiveGasPrice(t *testing.T) {
 		res := bhe.EffectiveGasPrice(block, tx)
 		assert.Nil(t, res)
 	})
+	t.Run("Assumption violations still return gas price if specified", func(t *testing.T) {
+		tx := evmtypes.Transaction{Type: 0x2, GasPrice: assets.NewWeiI(42), MaxPriorityFeePerGas: assets.NewWeiI(1), MaxFeePerGas: assets.NewWeiI(1), GasLimit: 42, Hash: utils.NewHash()}
+		res := bhe.EffectiveGasPrice(eipblock, tx)
+		assert.Equal(t, "42 wei", res.String())
+	})
+	t.Run("Assumption violations returns nil if no gas price is specified", func(t *testing.T) {
+		tx := evmtypes.Transaction{Type: 0x2, MaxPriorityFeePerGas: assets.NewWeiI(1), MaxFeePerGas: assets.NewWeiI(1), GasLimit: 42, Hash: utils.NewHash()}
+		res := bhe.EffectiveGasPrice(eipblock, tx)
+		assert.Nil(t, res)
+	})
+
 }
 
 func TestBlockHistoryEstimator_Block_Unmarshal(t *testing.T) {
